@@ -1,4 +1,4 @@
-# Scrapy settings for bariprop project
+# Scrapy settings for Scraper project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -7,14 +7,14 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'bariprop'
+BOT_NAME = 'Scraper'
 
-SPIDER_MODULES = ['bariprop.spiders']
-NEWSPIDER_MODULE = 'bariprop.spiders'
+SPIDER_MODULES = ['Scraper.spiders']
+NEWSPIDER_MODULE = 'Scraper.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'bariprop (+http://www.yourdomain.com)'
+#USER_AGENT = 'Scraper (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
@@ -45,13 +45,13 @@ ROBOTSTXT_OBEY = True
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
-#    'bariprop.middlewares.BaripropSpiderMiddleware': 543,
+#    'Scraper.middlewares.ScraperSpiderMiddleware': 543,
 #}
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #DOWNLOADER_MIDDLEWARES = {
-#    'bariprop.middlewares.BaripropDownloaderMiddleware': 543,
+#    'Scraper.middlewares.ScraperDownloaderMiddleware': 543,
 #}
 
 # Enable or disable extensions
@@ -62,9 +62,9 @@ ROBOTSTXT_OBEY = True
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'bariprop.pipelines.BaripropPipeline': 300,
-#}
+ITEM_PIPELINES = {
+    'Scraper.pipelines.BaripropPipeline': 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
