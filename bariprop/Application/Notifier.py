@@ -45,12 +45,12 @@ class Ui_mainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         mainWindow.setWindowTitle(_translate("mainWindow", "Apartament Search"))
         self.label.setText(_translate("mainWindow", "Run every"))
-        self.spinBox.setSuffix(_translate("mainWindow", " s"))
+        self.spinBox.setSuffix(_translate("mainWindow", " h"))
         self.pushButton.setText(_translate("mainWindow", "Start"))
 
     def handleStart(self):
         print("button clicked!")
-        self.searchTimer.start(1000 * self.spinBox.value())
+        self.searchTimer.start(3600 * 1000 * self.spinBox.value())
 
     def handleTimeout(self):
         print("timeout!")

@@ -7,7 +7,7 @@ class ScrapController(object):
     currentSpider=''
 
     def startCrawler():
-        spiders = ["escobar"]
+        spiders = ["escobar","ferraro","losCerros","tratoDirecto"]
         for spider in spiders:
             ScrapController.currentSpider=spider
             ScrapController.newItems=0

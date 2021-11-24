@@ -10,7 +10,7 @@ class EscobarSpider(scrapy.Spider):
         for item in response.xpath('//div[@class="searchpage-item"]'):
                 yield {
                     'title': item.xpath('div[@class="data"]/div[@class="title"]/a/text()').get(),
-                    'link': 'www.' + self.allowed_domains[0] + item.xpath('div[@class="data"]/div[@class="title"]/a/@href').get(),
+                    'link': 'http://www.' + self.allowed_domains[0] + item.xpath('div[@class="data"]/div[@class="title"]/a/@href').get(),
                     'price': item.xpath('div[@class="data"]/div[@class="price"]/text()').get()
                 }
         
