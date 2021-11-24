@@ -34,6 +34,39 @@ class Ui_mainWindow(object):
         self.verticalLayout.addWidget(self.pushButton)
         self.searchTimer = QtCore.QTimer(self.centralwidget)
         self.searchTimer.setObjectName("searchTimer")
+
+        self.icon = QtGui.QIcon("icon.png")
+        self.tray = QtWidgets.QSystemTrayIcon()
+        self.tray.setIcon(self.icon)
+        self.tray.setVisible(True)
+        self.trayMenu = QtWidgets.QMenu()
+
+        def maximized():
+            mainWindow.setVisible(True)
+            mainWindow.showNormal()
+            mainWindow.setFocus()
+            self.tray.hide()
+
+        def minimized():
+            mainWindow.showMinimized()
+            mainWindow.setVisible(False) 
+            self.tray.show()
+        
+        self.maximize = QtWidgets.QAction("Open Settings")
+        self.maximize.triggered.connect(maximized)
+
+        self.quit = QtWidgets.QAction("Quit")
+        self.quit.triggered.connect(mainWindow.close)
+
+        self.minimize = QtWidgets.QAction("Minimize")
+        self.minimize.triggered.connect(minimized)
+
+        self.trayMenu.addAction(self.maximize)
+        self.trayMenu.addAction(self.quit)
+        self.tray.setContextMenu(self.trayMenu)
+        self.tray.activated.connect(self.handleTray)
+        
+
         mainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(mainWindow)
@@ -51,9 +84,13 @@ class Ui_mainWindow(object):
     def handleStart(self):
         print("button clicked!")
         self.searchTimer.start(3600 * 1000 * self.spinBox.value())
+        self.minimize.trigger()
 
     def handleTimeout(self):
         print("timeout!")
         scraper.startCrawler()
 
+    def handleTray(self,reason):
+        if reason == QtWidgets.QSystemTrayIcon.ActivationReason.Trigger:
+            self.maximize.trigger()
 
