@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QApplication, QMainWindow, QSystemTrayIcon,QAction,QMenu
+from PyQt5.QtWidgets import QApplication, QMainWindow
 import Application.Notifier as Notifier
 import sys
 

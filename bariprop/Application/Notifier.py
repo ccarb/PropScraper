@@ -9,7 +9,8 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from scrapController import ScrapController as scraper
+from scrapController import ScrapController as Scraper
+import os
 
 class Ui_mainWindow(object):
     def setupUi(self, mainWindow):
@@ -32,10 +33,13 @@ class Ui_mainWindow(object):
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton.setObjectName("pushButton")
         self.verticalLayout.addWidget(self.pushButton)
+        self.logButton = QtWidgets.QPushButton(self.centralwidget)
+        self.logButton.setObjectName("logBtn")
+        self.verticalLayout.addWidget(self.logButton)
         self.searchTimer = QtCore.QTimer(self.centralwidget)
         self.searchTimer.setObjectName("searchTimer")
 
-        self.icon = QtGui.QIcon("icon.png")
+        self.icon = QtGui.QIcon("icon.png")#use the resource system
         self.tray = QtWidgets.QSystemTrayIcon()
         self.tray.setIcon(self.icon)
         self.tray.setVisible(True)
@@ -71,6 +75,7 @@ class Ui_mainWindow(object):
 
         self.retranslateUi(mainWindow)
         self.pushButton.clicked.connect(self.handleStart)
+        self.logButton.clicked.connect(self.handleOpenLog)
         self.searchTimer.timeout.connect(self.handleTimeout)
         QtCore.QMetaObject.connectSlotsByName(mainWindow)
 
@@ -80,17 +85,21 @@ class Ui_mainWindow(object):
         self.label.setText(_translate("mainWindow", "Run every"))
         self.spinBox.setSuffix(_translate("mainWindow", " h"))
         self.pushButton.setText(_translate("mainWindow", "Start"))
+        self.logButton.setText(_translate("mainWindow", "Open log"))
 
     def handleStart(self):
         print("button clicked!")
-        self.searchTimer.start(3600 * 1000 * self.spinBox.value())
+        self.searchTimer.start(1 * 1000 * self.spinBox.value())
         self.minimize.trigger()
 
     def handleTimeout(self):
         print("timeout!")
-        scraper.startCrawler()
+        Scraper.startCrawler()
 
     def handleTray(self,reason):
         if reason == QtWidgets.QSystemTrayIcon.ActivationReason.Trigger:
             self.maximize.trigger()
+
+    def handleOpenLog(self):
+        os.system("notepad.exe items.jl")
 
