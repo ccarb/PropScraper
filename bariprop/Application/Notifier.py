@@ -9,11 +9,13 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from Application.scrapyWorker import ScrapyWorker
 from scrapController import ScrapController as Scraper
 import os
 
 class Ui_mainWindow(object):
     def setupUi(self, mainWindow):
+        self.appDir=QtCore.QDir.current().absolutePath()
         mainWindow.setObjectName("mainWindow")
         mainWindow.resize(300, 100)
         self.centralwidget = QtWidgets.QWidget(mainWindow)
@@ -38,6 +40,8 @@ class Ui_mainWindow(object):
         self.verticalLayout.addWidget(self.logButton)
         self.searchTimer = QtCore.QTimer(self.centralwidget)
         self.searchTimer.setObjectName("searchTimer")
+        self.scraper=ScrapyWorker(self.centralwidget)
+        self.scraper.setObjectName("scraper")
 
         self.icon = QtGui.QIcon("icon.png")#use the resource system
         self.tray = QtWidgets.QSystemTrayIcon()
@@ -78,7 +82,8 @@ class Ui_mainWindow(object):
         self.logButton.clicked.connect(self.handleOpenLog)
         self.searchTimer.timeout.connect(self.handleTimeout)
         QtCore.QMetaObject.connectSlotsByName(mainWindow)
-
+        
+        
     def retranslateUi(self, mainWindow):
         _translate = QtCore.QCoreApplication.translate
         mainWindow.setWindowTitle(_translate("mainWindow", "Apartament Search"))
@@ -89,12 +94,14 @@ class Ui_mainWindow(object):
 
     def handleStart(self):
         print("button clicked!")
-        self.searchTimer.start(1 * 1000 * self.spinBox.value())
+        self.searchTimer.start(3600 * 1000 * self.spinBox.value())
         self.minimize.trigger()
+        self.scraper.runAllSpiders(self.appDir)
 
     def handleTimeout(self):
         print("timeout!")
-        Scraper.startCrawler()
+        self.scraper.runAllSpiders(self.appDir)
+        #Scraper.startCrawler()
 
     def handleTray(self,reason):
         if reason == QtWidgets.QSystemTrayIcon.ActivationReason.Trigger:
