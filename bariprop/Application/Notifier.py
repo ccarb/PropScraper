@@ -9,15 +9,19 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-import os, sys
+import os, pkgutil
 import Application.resources as resources
 from scrapy.utils.log import configure_logging
 from scrapy.utils.project import get_project_settings
-from twisted.internet import task
+from twisted.internet import task, defer
 from scrapy.crawler import CrawlerRunner
+import Scraper.spiders
 
 class Ui_mainWindow(object):
     def setupUi(self, mainWindow):
+        self.spiders=[]
+        for [_, spider, _] in pkgutil.iter_modules(Scraper.spiders.__path__):
+            self.spiders.append(spider)
         self.appDir=QtCore.QDir.current().absolutePath()
         mainWindow.setObjectName("mainWindow")
         mainWindow.resize(300, 100)
@@ -80,7 +84,7 @@ class Ui_mainWindow(object):
         ### Set up reactor
         #import sys
         self.runner = CrawlerRunner(get_project_settings())
-        self.scrapTask = task.LoopingCall(self.run_spider)
+        self.scrapTask = task.LoopingCall(self.periodically_run_spiders)
         configure_logging({'LOG_FORMAT': '%(levelname)s: %(message)s'})
         ###
 
@@ -116,7 +120,15 @@ class Ui_mainWindow(object):
     def handleOpenLog(self):
         os.system("notepad.exe items.jl")
 
-    def run_spider(self):
+    @defer.inlineCallbacks
+    def run_spiders(self):
             self.scrapTask.stop()
-            d = self.runner.crawl('ferraro',)
-            d.addBoth(lambda _: self.scrapTask.start(self.spinBox.value(), False))
+            for spider in self.spiders:
+                yield self.runner.crawl(spider)
+            # d = self.runner.crawl('ferraro')
+            #return self.runner.join()
+
+
+    def periodically_run_spiders(self):
+        d = self.run_spiders()
+        d.addBoth(lambda _: self.scrapTask.start(self.spinBox.value(), False))
