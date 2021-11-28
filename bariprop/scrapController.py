@@ -4,7 +4,7 @@
 #from scrapy.utils.project import get_project_settings
 import Scraper.spiders
 import pkgutil
-from win10toast import ToastNotifier
+from win10toast_persist import ToastNotifier
 import subprocess
 
 class ScrapController(object):
@@ -36,5 +36,5 @@ class ScrapController(object):
     def sendNotification():
         if ScrapController.newItems!= 0:
             toaster = ToastNotifier()
-            toaster.show_toast("Bariprop","Se encontraron " + str(ScrapController.newItems) + " nuevas propiedades.")
-            
+            toaster.show_toast("Bariprop","Se encontraron " + str(ScrapController.newItems) + " nuevas propiedades en " + ScrapController.currentSpider,duration=None)
+            ScrapController.newItems=0
