@@ -1,5 +1,6 @@
 wheel
 scrapy
 pyqt5
+Qt5Reactor
 win10toast-persist
 pyinstaller

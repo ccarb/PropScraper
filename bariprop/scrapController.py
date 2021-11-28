@@ -36,4 +36,5 @@ class ScrapController(object):
     def sendNotification():
         if ScrapController.newItems!= 0:
             toaster = ToastNotifier()
-            toaster.show_toast("Bariprop","Se encontraron " + str(ScrapController.newItems) + " nuevas propiedades.",duration=None)
+            toaster.show_toast("Bariprop","Se encontraron " + str(ScrapController.newItems) + " nuevas propiedades en " + ScrapController.currentSpider,duration=None)
+            ScrapController.newItems=0

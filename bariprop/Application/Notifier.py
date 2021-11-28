@@ -9,9 +9,12 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from Application.scrapyWorker import ScrapyWorker
-from scrapController import ScrapController as Scraper
-import os
+import os, sys
+import Application.resources as resources
+from scrapy.utils.log import configure_logging
+from scrapy.utils.project import get_project_settings
+from twisted.internet import task
+from scrapy.crawler import CrawlerRunner
 
 class Ui_mainWindow(object):
     def setupUi(self, mainWindow):
@@ -38,12 +41,10 @@ class Ui_mainWindow(object):
         self.logButton = QtWidgets.QPushButton(self.centralwidget)
         self.logButton.setObjectName("logBtn")
         self.verticalLayout.addWidget(self.logButton)
-        self.searchTimer = QtCore.QTimer(self.centralwidget)
-        self.searchTimer.setObjectName("searchTimer")
-        self.scraper=ScrapyWorker(self.centralwidget)
-        self.scraper.setObjectName("scraper")
 
-        self.icon = QtGui.QIcon("icon.png")#use the resource system
+
+        #self.icon = QtGui.QIcon("icon.png")#use the resource system
+        self.icon = QtGui.QIcon(":/Icons/icon.png")
         self.tray = QtWidgets.QSystemTrayIcon()
         self.tray.setIcon(self.icon)
         self.tray.setVisible(True)
@@ -64,7 +65,6 @@ class Ui_mainWindow(object):
         self.maximize.triggered.connect(maximized)
 
         self.quit = QtWidgets.QAction("Quit")
-        self.quit.triggered.connect(mainWindow.close)
 
         self.minimize = QtWidgets.QAction("Minimize")
         self.minimize.triggered.connect(minimized)
@@ -77,11 +77,21 @@ class Ui_mainWindow(object):
 
         mainWindow.setCentralWidget(self.centralwidget)
 
+        ### Set up reactor
+        #import sys
+        self.runner = CrawlerRunner(get_project_settings())
+        self.scrapTask = task.LoopingCall(self.run_spider)
+        configure_logging({'LOG_FORMAT': '%(levelname)s: %(message)s'})
+        ###
+
         self.retranslateUi(mainWindow)
         self.pushButton.clicked.connect(self.handleStart)
         self.logButton.clicked.connect(self.handleOpenLog)
-        self.searchTimer.timeout.connect(self.handleTimeout)
+        self.quit.triggered.connect(mainWindow.close)
         QtCore.QMetaObject.connectSlotsByName(mainWindow)
+
+        
+        #self.reactor.runReturn()
         
         
     def retranslateUi(self, mainWindow):
@@ -94,14 +104,10 @@ class Ui_mainWindow(object):
 
     def handleStart(self):
         print("button clicked!")
-        self.searchTimer.start(3600 * 1000 * self.spinBox.value())
         self.minimize.trigger()
-        self.scraper.runAllSpiders(self.appDir)
-
-    def handleTimeout(self):
-        print("timeout!")
-        self.scraper.runAllSpiders(self.appDir)
-        #Scraper.startCrawler()
+        if self.scrapTask.running:
+            self.scrapTask.stop()
+        self.scrapTask.start(self.spinBox.value())
 
     def handleTray(self,reason):
         if reason == QtWidgets.QSystemTrayIcon.ActivationReason.Trigger:
@@ -110,3 +116,7 @@ class Ui_mainWindow(object):
     def handleOpenLog(self):
         os.system("notepad.exe items.jl")
 
+    def run_spider(self):
+            self.scrapTask.stop()
+            d = self.runner.crawl('ferraro',)
+            d.addBoth(lambda _: self.scrapTask.start(self.spinBox.value(), False))
