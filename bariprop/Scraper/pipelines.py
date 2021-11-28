@@ -29,6 +29,7 @@ class BaripropPipeline:
 
     def open_spider(self,spider):
         self.file=open('items.jl','a')
+        controller.currentSpider=spider.name
 
     def close_spider(self,spider):
         self.file.close()
