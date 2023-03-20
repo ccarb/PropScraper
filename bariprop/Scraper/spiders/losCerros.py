@@ -1,6 +1,14 @@
 from scrapy import Request
 from scrapy.http import TextResponse
 import scrapy
+import scrapy.utils.misc
+import scrapy.core.scraper
+
+def warn_on_generator_with_return_value_stub(spider, callable):
+    pass
+
+scrapy.utils.misc.warn_on_generator_with_return_value = warn_on_generator_with_return_value_stub
+scrapy.core.scraper.warn_on_generator_with_return_value = warn_on_generator_with_return_value_stub
 
 class losCerrosSpider(scrapy.Spider):
     name = "losCerros"

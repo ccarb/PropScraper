@@ -16,11 +16,11 @@
 {"title": "Local Comercial Gastronomico en &quotShopping Patagonia&quot", "link": "http://www.escobarnegociosinmobiliarios.com/propiedad/alquiler-de-local-comercial-en-san-carlos-de-bariloche-bariloche-rio-negro-2663-163014", "price": "ARS 41000"}
 {"title": "Local Comercial en &quotShopping Patagonia&quot", "link": "http://www.escobarnegociosinmobiliarios.com/propiedad/alquiler-de-local-comercial-en-san-carlos-de-bariloche-bariloche-rio-negro-2663-163013", "price": "ARS 34800"}
 {"title": "Lotes en la entrada del frutillar", "link": "http://www.escobarnegociosinmobiliarios.com/propiedad/alquiler-de-terreno-en-san-carlos-de-bariloche-bariloche-rio-negro-2663-156808", "price": "ARS 20000"}
+{"title": "Alquiler! Hermoso departamento frente al Lago Nahuel Huapi!", "link": "https://www.ferrarapropiedades.com/properties/alquiler-hermoso-departamento-frente-al-lago-nahuel-huapi/", "price": 85000}
 {"title": "Galpon en venta y alquiler Centro ", "link": "https://loscerrospropiedades.com/galpon-en-venta-y-alquiler-en-centro-ficha-lcr402", "price": "130000"}
 {"title": "Galpon en alquiler Centro ", "link": "https://loscerrospropiedades.com/galpon-en-alquiler-en-centro-ficha-lcr758", "price": "210000"}
 {"title": "Local en alquiler Centro ", "link": "https://loscerrospropiedades.com/local-en-alquiler-en-centro-ficha-lcr572", "price": "130000"}
 {"title": "Local en alquiler Centro ", "link": "https://loscerrospropiedades.com/local-en-alquiler-en-centro-ficha-lcr503", "price": "55000"}
-{"title": "Alquiler! Hermoso departamento frente al Lago Nahuel Huapi!", "link": "https://www.ferrarapropiedades.com/properties/alquiler-hermoso-departamento-frente-al-lago-nahuel-huapi/", "price": 85000}
 {"title": "Trato Directo alquila semipermanente caba\u00f1a en Lago Puelo desde diciembre a marzo", "link": "https://www.tratodirecto.com.ar/propiedad/properties/alquiler-de-cabana-lago-puelo", "price": "$AR 160.000"}
 {"title": "ALQUILER PERMANENTE EN DINA HUAPI \u00a0Trato Directo alquila CASA con Costa de Lago con 30 metros lineales, a partir de febrero de 2022", "link": "https://www.tratodirecto.com.ar/propiedad/properties/alquiler-de-casa-permanente-dina-huapi", "price": "U$S 1.000"}
 {"title": "", "link": "https://www.tratodirecto.com.ar/propiedad/properties/local-comercial-a-estrenar", "price": "$AR 50.000"}
